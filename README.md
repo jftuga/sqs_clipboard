@@ -46,3 +46,4 @@ ___
 
 * Add `CloudFormation` template to create a `SQS FIFO Queue` to the *README* file
 * Create a MacOS *app* to include icon
+* Create a `.goreleaser.yml` file
