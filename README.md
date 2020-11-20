@@ -3,7 +3,7 @@ Use AWS SQS as a clipboard to copy and paste across different systems and platfo
 
 ### Current status: beta
 
-* Only tested on *Windows*
+* Only tested on *Windows* and *MacOS*
 
 ___
 
