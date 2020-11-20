@@ -3,6 +3,8 @@ Use AWS SQS as a clipboard to copy and paste across different systems and platfo
 
 ### Current status: beta
 
+* Only tested in *Windows*
+
 ___
 
 **Description**
@@ -22,6 +24,11 @@ This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO
 * [How to set environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set)
 * * `SQS_CLIPBOARD_URL` should be set to URL of your SQS `FIFO` Queue
 
+**Compilation**
+
+* Run: `go get github.com/akavel/rsrc`
+* Make sure `${HOME}/go/bin` is in your `PATH`
+* Run: `make`
 ___
 
 **Icons**
