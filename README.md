@@ -27,8 +27,12 @@ This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO
 **Compilation**
 
 * Run: `go get github.com/akavel/rsrc`
-* Make sure `${HOME}/go/bin` is in your `PATH`
+* Make sure `${HOME}/go/bin` is in your `PATH` so that `rsrc` can be found
 * Run: `make`
+* There should now be 3 resulting binaries found in these subdirectories:
+* * sqscopy
+* * sqspaste
+* * sqspurge
 ___
 
 **Icons**
