@@ -9,7 +9,7 @@ ___
 
 **Description**
 
-This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html) as an intermediary. To minimize the amount of data transferred, the contents are compressed with the `XZ` algorithm before sending with `sqscopy` and then decompressed upon arrival with `sqspaste`.  A maximum of `256 KB` of compressed *(and then encoded)* data can be sent to the queue.
+This set of programs can be used to *copy* and *paste* clipboard text by using an [AWS SQS FIFO Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html) as an intermediary. To minimize the amount of data transferred, the contents are compressed with the `XZ` algorithm before sending to the SQS queue via `sqscopy` and then decompressed upon arrival via `sqspaste`.  A maximum of `256 KB` of compressed *(and then encoded)* data can be sent to the queue.
 
 **NOTE:** There can be a small AWS cost when using this program.  Each copy / paste operation uses 3 SQS requests, plus the data transferred associated with `sqspaste`.  See [Amazon SQS pricing](https://aws.amazon.com/sqs/pricing/) for more details.
 
@@ -22,13 +22,15 @@ This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO
 **Setting Environment Variables**
 
 * The `SQS_CLIPBOARD_URL` environment variable should be set to URL of your SQS `FIFO` Queue
+* * This URL can be found on the AWS SQS Dashboard for the queue that you have created
 * [How to set environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set)
 
 **Compilation**
 
 * Run: `go get github.com/akavel/rsrc`
-* Make the `rsrc` program can be located within your `PATH`
+* Make sure the `rsrc` program can be located within your `PATH`
 * Run: `make`
+* * *make.exe* for Windows can be downloaded as a part of the [UnxUtils](https://sourceforge.net/projects/unxutils/) package.
 * There should now be 3 resulting binaries found in these subdirectories:
 * * sqscopy
 * * sqspaste
@@ -36,7 +38,7 @@ This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO
 
 **AWS Queue Creation**
 
-* Make sure to create a `fifo` queue
+* Make sure to create a `fifo` queue instead of a `standard` queue
 * * The name of your queue should end in `.fifo`
 * Set the `Receive message wait time` aka *long polling* to at least `12` seconds
 * Enable `Content-based deduplication`
@@ -45,7 +47,7 @@ This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO
 
 ___
 
-**Windows Icons**
+**Windows Icons Used**
 
 * [Button Upload Icon](https://www.iconarchive.com/show/soft-scraps-icons-by-hopstarter/Button-Upload-icon.html)
 * [Button Download Icon](https://www.iconarchive.com/show/soft-scraps-icons-by-hopstarter/Button-Download-icon.html)
