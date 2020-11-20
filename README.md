@@ -1,6 +1,10 @@
 # sqs_clipboard
 Use AWS SQS as a clipboard to copy and paste across different systems and platforms.
 
+### Current status: beta
+
+___
+
 **Description**
 
 This set of programs can be used to *copy* and *paste* by using an [AWS SQS FIFO Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html) as an intermediary. To minimize the amount of data transferred, the contents are compressed before sending with `sqscopy` and then decompressed with `sqspaste`.  **WARNING:** There can be a small cost when using this program.  Each copy / paste operation uses 3 SQS requests, plus the data transferred associated with *sqspaste*.  See [Amazon SQS pricing](https://aws.amazon.com/sqs/pricing/) for more details.
