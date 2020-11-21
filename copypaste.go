@@ -18,6 +18,7 @@ package copypaste
 import (
 	"bytes"
 	"io"
+	"io/ioutil"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -42,6 +43,23 @@ func compress(msg string) bytes.Buffer {
 		customlog.Fatalf("xz.NewWriter error %s", err)
 	}
 	if _, err := io.WriteString(w, msg); err != nil {
+		customlog.Fatalf("WriteString error %s", err)
+	}
+	if err := w.Close(); err != nil {
+		customlog.Fatalf("w.Close error %s", err)
+	}
+
+	return buf
+}
+
+// compress msg before sending it to SQS
+func compressBinary(data []byte) bytes.Buffer {
+	var buf bytes.Buffer
+	w, err := xz.NewWriter(&buf)
+	if err != nil {
+		customlog.Fatalf("xz.NewWriter error %s", err)
+	}
+	if _, err := io.WriteString(w, bytes.NewBuffer(data).String()); err != nil {
 		customlog.Fatalf("WriteString error %s", err)
 	}
 	if err := w.Close(); err != nil {
@@ -160,6 +178,92 @@ func (cp CopyPaste) Paste() string {
 
 	customlog.Fatalf("Unknown encoding: %s", *encoding)
 	return ""
+}
+
+// CopySmallFile send a file to the SQS queue
+// it must be smaller than 256 KB after XZ compression and b91 encoding
+func (cp CopyPaste) CopySmallFile(fileName string, data []byte) {
+	xz := compressBinary(data)
+	encoding := "xzb91"
+
+	b91enc := base91.StdEncoding.EncodeToString(xz.Bytes())
+	//fmt.Println(len(data), xz.Len(), len(b91enc))
+
+	maxSize := 256 * 1024
+	if len(b91enc) > maxSize {
+		customlog.Fatalf("Data of length %d is too big! Should be less than %d.", len(b91enc), maxSize)
+	}
+
+	_, err := cp.svc.SendMessage(&sqs.SendMessageInput{
+		MessageAttributes: map[string]*sqs.MessageAttributeValue{
+			"Encoding": &sqs.MessageAttributeValue{
+				DataType:    aws.String("String"),
+				StringValue: aws.String(encoding),
+			},
+			"Filename": &sqs.MessageAttributeValue{
+				DataType:    aws.String("String"),
+				StringValue: aws.String(fileName),
+			},
+		},
+		MessageGroupId: &cp.QueueURL,
+		MessageBody:    aws.String(b91enc),
+		QueueUrl:       &cp.QueueURL,
+	})
+	if err != nil {
+		customlog.Log(err.Error())
+		return
+	}
+}
+
+// PasteSmallFile retrieves a file from SQS and saves it to the file system
+func (cp CopyPaste) PasteSmallFile() string {
+	var timeout int64
+	timeout = 5
+
+	msgResult, err := cp.svc.ReceiveMessage(&sqs.ReceiveMessageInput{
+		AttributeNames: []*string{
+			aws.String(sqs.MessageSystemAttributeNameSentTimestamp),
+		},
+		MessageAttributeNames: []*string{
+			aws.String(sqs.QueueAttributeNameAll),
+		},
+		QueueUrl:            &cp.QueueURL,
+		MaxNumberOfMessages: aws.Int64(1),
+		VisibilityTimeout:   &timeout,
+	})
+	if err != nil {
+		customlog.Log(err.Error())
+		return ""
+	}
+
+	if len(msgResult.Messages) == 0 {
+		customlog.Fatalf("There are no more messages in the SQS queue!")
+		return ""
+	}
+
+	cp.Delete(*msgResult.Messages[0].ReceiptHandle)
+
+	fileName := (*msgResult.Messages[0]).MessageAttributes["Filename"].StringValue
+	encoding := (*msgResult.Messages[0]).MessageAttributes["Encoding"].StringValue
+	if "xzb91" == *encoding {
+		body := *msgResult.Messages[0].Body
+		b91dec, err := base91.StdEncoding.DecodeString(body)
+		if err != nil {
+			customlog.Log(err.Error())
+			return ""
+		}
+		compressedData := bytes.NewBuffer(b91dec)
+		un := decompress(compressedData)
+		err = ioutil.WriteFile(*fileName, un.Bytes(), 0700)
+		if err != nil {
+			customlog.Log(err.Error())
+			return ""
+		}
+	} else {
+		customlog.Fatalf("Unknown encoding: %s", *encoding)
+		return ""
+	}
+	return *fileName
 }
 
 // Delete a message from the SQS queue

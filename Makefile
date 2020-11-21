@@ -1,7 +1,7 @@
 
 TOPTARGETS := all clean
 
-SUBDIRS := sqscopy sqspaste sqspurge
+SUBDIRS := sqscopy sqspaste sqspurge sqscopysmallfile sqspastesmallfile
 
 $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):
