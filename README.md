@@ -18,6 +18,12 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * `sqscopy` - send the system clipboard contents to a user-defined AWS SQS FIFO queue
 * `sqspaste` - get the queue contents and then place it onto the system clipboard
 * `sqspurge` - remove all entries from the queue
+* `sqscopysmallfile` - copy a small file to the queue with file name given on command line
+* * after XZ compression and base 91 encoding, the resulting file size must be less than 256 KB
+* `sqspastesmallfile` - retrieve a file from the queue
+* * **will overwrite** an existing file with the same name
+* * file name is stored in the queue along with the file
+* * no command line arguments needed
 
 **Setting Environment Variables**
 
@@ -35,6 +41,8 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * * sqscopy
 * * sqspaste
 * * sqspurge
+* * sqscopysmallfile
+* * sqspastesmallfile
 
 **AWS Queue Creation**
 
