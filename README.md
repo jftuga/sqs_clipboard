@@ -37,7 +37,7 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * Make sure the `rsrc` program can be located within your `PATH`
 * Run: `make`
 * * *make.exe* for Windows can be downloaded as a part of the [UnxUtils](https://sourceforge.net/projects/unxutils/) package.
-* There should now be 3 resulting binaries found in these subdirectories:
+* There should now be 5 resulting binaries found in these subdirectories:
 * * sqscopy
 * * sqspaste
 * * sqspurge
