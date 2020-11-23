@@ -17,6 +17,6 @@ func Log(msg string) {
 // Fatalf is similar to log.Fatalf, but with a pause
 func Fatalf(format string, v ...interface{}) {
 	log.Println(fmt.Sprintf(format, v...))
-	time.Sleep(5 * time.Second)
+	time.Sleep(6 * time.Second)
 	os.Exit(1)
 }

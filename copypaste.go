@@ -7,6 +7,7 @@ copy / paste text to / from SQS queue
 
 See also:
 https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/sqs-example-receive-message.html
+https://docs.aws.amazon.com/sdk-for-go/api/service/sqs/
 
 */
 
@@ -21,9 +22,12 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/jftuga/copypaste/customlog"
+	"github.com/jftuga/copypaste/randstring"
 	"github.com/mtraver/base91"
 	"github.com/ulikunitz/xz"
 )
+
+const version = "1.0.0"
 
 // CopyPaste contains the AWS SQS queue url
 type CopyPaste struct {
@@ -80,6 +84,11 @@ func decompress(buf *bytes.Buffer) *bytes.Buffer {
 	return &uncompressed
 }
 
+// Version return the code version
+func Version() string {
+	return version
+}
+
 // New initializes a new CopyPaste object
 func New(queueURL string) *CopyPaste {
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
@@ -121,9 +130,10 @@ func (cp CopyPaste) Copy(msg string) {
 				StringValue: aws.String(encoding),
 			},
 		},
-		MessageGroupId: &cp.QueueURL,
-		MessageBody:    aws.String(*payload),
-		QueueUrl:       &cp.QueueURL,
+		MessageDeduplicationId: aws.String(randstring.String(32)),
+		MessageGroupId:         &cp.QueueURL,
+		MessageBody:            aws.String(*payload),
+		QueueUrl:               &cp.QueueURL,
 	})
 	if err != nil {
 		customlog.Log(err.Error())
@@ -153,7 +163,7 @@ func (cp CopyPaste) Paste() string {
 	}
 
 	if len(msgResult.Messages) == 0 {
-		customlog.Fatalf("There are no more messages in the SQS queue!")
+		customlog.Fatalf("There are no messages in the SQS queue. This could be a transient error so try pasting again.")
 	}
 
 	cp.Delete(*msgResult.Messages[0].ReceiptHandle)
@@ -202,9 +212,10 @@ func (cp CopyPaste) CopySmallFile(fileName string, data []byte) {
 				StringValue: aws.String(fileName),
 			},
 		},
-		MessageGroupId: &cp.QueueURL,
-		MessageBody:    aws.String(b91enc),
-		QueueUrl:       &cp.QueueURL,
+		MessageDeduplicationId: aws.String(randstring.String(64)),
+		MessageGroupId:         &cp.QueueURL,
+		MessageBody:            aws.String(b91enc),
+		QueueUrl:               &cp.QueueURL,
 	})
 	if err != nil {
 		customlog.Log(err.Error())
@@ -234,7 +245,7 @@ func (cp CopyPaste) PasteSmallFile() string {
 	}
 
 	if len(msgResult.Messages) == 0 {
-		customlog.Fatalf("There are no more messages in the SQS queue!")
+		customlog.Fatalf("There are no messages in the SQS queue. This could be a transient error so try pasting again.")
 		return ""
 	}
 

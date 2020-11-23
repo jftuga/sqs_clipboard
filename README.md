@@ -49,7 +49,7 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * Make sure to create a `fifo` queue instead of a `standard` queue
 * * The name of your queue should end in `.fifo`
 * Set the `Receive message wait time` aka *long polling* to at least `12` seconds
-* Enable `Content-based deduplication`
+* **Note:** Do **not** check: `Content-based deduplication`
 * Send / Receive Access: `Only the queue owner`
 * Encryption: Optional, but recommended
 
