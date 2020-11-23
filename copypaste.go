@@ -7,9 +7,6 @@ copy / paste text to / from SQS queue
 
 See also:
 https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/sqs-example-receive-message.html
-https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
-
-aws configure set copypaste https://sqs.us-east-1.amazonaws.com/078680625362/CopyPaste2.fifo
 
 */
 
