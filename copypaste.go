@@ -212,7 +212,7 @@ func (cp CopyPaste) CopySmallFile(fileName string, data []byte) {
 				StringValue: aws.String(fileName),
 			},
 		},
-		MessageDeduplicationId: aws.String(randstring.String(64)),
+		MessageDeduplicationId: aws.String(randstring.String(32)),
 		MessageGroupId:         &cp.QueueURL,
 		MessageBody:            aws.String(b91enc),
 		QueueUrl:               &cp.QueueURL,
