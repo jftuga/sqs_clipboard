@@ -1,0 +1,44 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+ 
+  "Description" : "SQS Clipboard",
+ 
+  "Parameters" : {
+    "qName": {
+      "Default": "",
+      "Description": "Name must end in .fifo",
+      "Type": "String"
+    }
+  },
+ 
+  "Resources" : {
+    "MyQueue" : {
+      "Type" : "AWS::SQS::Queue",
+      "Properties" : {
+          "ContentBasedDeduplication" : false,
+          "DelaySeconds" : 0,
+          "FifoQueue" : true,
+          "KmsDataKeyReusePeriodSeconds" : 3600,
+          "KmsMasterKeyId" : "alias/aws/sqs",
+          "MessageRetentionPeriod" : 172800,
+          "QueueName" : { "Ref": "qName" },
+          "ReceiveMessageWaitTimeSeconds" : 12,
+          "VisibilityTimeout" : 30
+        }
+    },
+  },
+  "Outputs" : {
+    "QueueURL" : {
+      "Description" : "URL of new Amazon SQS Queue",
+      "Value" : { "Ref" : "MyQueue" }
+    },
+    "QueueARN" : {
+      "Description" : "ARN of new Amazon SQS Queue",
+      "Value" : { "Fn::GetAtt" : ["MyQueue", "Arn"]}
+    },
+    "QueueName" : {
+      "Description" : "Name new Amazon SQS Queue",
+      "Value" : { "Fn::GetAtt" : ["MyQueue", "QueueName"]}
+    }
+  }
+}
