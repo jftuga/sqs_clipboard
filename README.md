@@ -48,6 +48,8 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * **Note:** Do **not** check: `Content-based deduplication`, otherwise you will **not** be able to copy the exact same contents with a 5 minute interval.
 * Send / Receive Access: `Only the queue owner`
 * Encryption: Optional, but recommended
+* * Data key reuse period: `1 hour`
+* * A shorter time period provides better security, but results in more calls to AWS KMS, which might incur charges after Free Tier.
 
 **AWS IAM Permissions**
 
