@@ -64,11 +64,15 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
             "Effect": "Allow",
             "Action": [
                 "sqs:DeleteMessage",
+                "sqs:GetQueueUrl",
                 "sqs:ChangeMessageVisibility",
                 "sqs:PurgeQueue",
                 "sqs:ReceiveMessage",
+                "sqs:DeleteQueue",
                 "sqs:SendMessage",
-                "sqs:ListQueueTags"
+                "sqs:GetQueueAttributes",
+                "sqs:ListQueueTags",
+                "sqs:CreateQueue" 
             ],
             "Resource": "arn:aws:sqs:region:account-id:QueueName.fifo"
         }
