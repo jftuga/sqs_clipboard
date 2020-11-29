@@ -53,6 +53,31 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * Send / Receive Access: `Only the queue owner`
 * Encryption: Optional, but recommended
 
+**AWS IAM Permissions**
+
+* Make sure to change the `Resource` value listed below.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "sqs:DeleteMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:PurgeQueue",
+                "sqs:ReceiveMessage",
+                "sqs:SendMessage",
+                "sqs:ListQueueTags"
+            ],
+            "Resource": "arn:aws:sqs:region:account-id:QueueName.fifo"
+        }
+    ]
+}
+```
+
 ___
 
 **Windows Icons Used**
