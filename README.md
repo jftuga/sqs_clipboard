@@ -7,7 +7,7 @@ ___
 
 This set of programs can be used to *copy* and *paste* clipboard text by using an [AWS SQS FIFO Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html) as an intermediary. To minimize the amount of data transferred, the contents are compressed with the `XZ` algorithm before sending to the SQS queue via `sqscopy` and then decompressed upon arrival via `sqspaste`.  A maximum of `256 KB` of compressed *(and then encoded)* data can be sent to the queue.
 
-**NOTE:** There can be a small AWS cost when using this program.  Each copy / paste operation uses 3 SQS requests, plus the data transferred associated with `sqspaste`.  See [Amazon SQS pricing](https://aws.amazon.com/sqs/pricing/) for more details.
+**NOTE:** There can be a small AWS cost when using this program.  Each copy / paste operation uses 3 SQS requests, plus the data transferred associated with `sqspaste` and `sqspastesmallfile`.  See [Amazon SQS pricing](https://aws.amazon.com/sqs/pricing/) for more details.
 
 **Programs**
 
