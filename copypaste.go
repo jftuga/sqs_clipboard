@@ -27,7 +27,7 @@ import (
 	"github.com/ulikunitz/xz"
 )
 
-const version = "1.0.0"
+const version = "1.0.1"
 
 // CopyPaste contains the AWS SQS queue url
 type CopyPaste struct {
@@ -164,6 +164,10 @@ func (cp CopyPaste) Paste() string {
 
 	if len(msgResult.Messages) == 0 {
 		customlog.Fatalf("There are no messages in the SQS queue. This could be a transient error so try pasting again.")
+	}
+
+	if _, ok := (*msgResult.Messages[0]).MessageAttributes["Filename"]; ok {
+		customlog.Fatalf("You are trying to paste a file. Use 'sqspastesmallfile' instead.")
 	}
 
 	cp.Delete(*msgResult.Messages[0].ReceiptHandle)
