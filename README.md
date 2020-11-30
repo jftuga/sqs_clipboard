@@ -100,6 +100,11 @@ ___
 * * [Distribute your Go program (or any single binary) as a native macOS application](https://gist.github.com/mholt/11008646c95d787c30806d3f24b2c844)
 * * [Go library to create menubar apps- programs that live only in OSX's NSStatusBar](https://github.com/caseymrm/menuet)
 
+**AWS Resources**
+* https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
+* https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html
+* https://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html
+
 **TODO**
 
 * Add `CloudFormation` template to create a `SQS FIFO Queue` to the *README* file
