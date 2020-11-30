@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -19,10 +21,18 @@ func fileExists(filename string) bool {
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	argsVersion := flag.Bool("v", false, "display program version and then exit")
+	flag.Parse()
+
+	if *argsVersion {
+		fmt.Println(copypaste.Version())
+		return
+	}
+
+	if len(flag.Args()) != 1 {
 		customlog.Log("Give file name on command line.")
 	}
-	fileName := os.Args[1]
+	fileName := flag.Arg(0)
 	if !fileExists(fileName) {
 		customlog.Fatalf("File not found: %s", fileName)
 	}

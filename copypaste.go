@@ -15,6 +15,7 @@ package copypaste
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 
@@ -27,7 +28,9 @@ import (
 	"github.com/ulikunitz/xz"
 )
 
-const version = "1.0.1"
+const pgmVersion = "1.0.2"
+const pgmName = "sqs_clipboard"
+const pgmUrl = "https://github.com/jftuga/sqs_clipboard"
 
 // CopyPaste contains the AWS SQS queue url
 type CopyPaste struct {
@@ -84,9 +87,9 @@ func decompress(buf *bytes.Buffer) *bytes.Buffer {
 	return &uncompressed
 }
 
-// Version return the code version
+// Version return the program version number
 func Version() string {
-	return version
+	return fmt.Sprintf("%s v%s\n%s\n", pgmName, pgmVersion, pgmUrl)
 }
 
 // New initializes a new CopyPaste object
