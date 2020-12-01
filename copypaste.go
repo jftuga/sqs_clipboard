@@ -28,7 +28,7 @@ import (
 	"github.com/ulikunitz/xz"
 )
 
-const pgmVersion = "1.0.3"
+const pgmVersion = "1.0.4"
 const pgmName = "sqs_clipboard"
 const pgmUrl = "https://github.com/jftuga/sqs_clipboard"
 
