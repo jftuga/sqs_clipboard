@@ -99,7 +99,7 @@ ___
 * [a cross platform Go library to place an icon and menu in the notification area](https://github.com/getlantern/systray)
 * `Windows`
 * [How do you set the application icon in golang?](https://stackoverflow.com/questions/25602600/how-do-you-set-the-application-icon-in-golang)
-* * [Tool for embedding .ico & manifest resources in Go programs for Windows](https://github.com/akavel/rsrc)
+* * [goversioninfo](https://github.com/josephspurrier/goversioninfo)
 * `Mac`
 * [Packaging a Go application for macOS](https://medium.com/@mattholt/packaging-a-go-application-for-macos-f7084b00f6b5)
 * * [Distribute your Go program (or any single binary) as a native macOS application](https://gist.github.com/mholt/11008646c95d787c30806d3f24b2c844)
@@ -112,6 +112,5 @@ ___
 
 **TODO**
 
-* Add `CloudFormation` template to create a `SQS FIFO Queue` to the *README* file
 * Create a MacOS *app* to include icon
-* Create a `.goreleaser.yml` file
+
