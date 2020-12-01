@@ -1,0 +1,75 @@
+project_name: sqs_clipboard
+before:
+  hooks:
+    - go generate ./...
+    - go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+builds:
+  - main: .
+    id: "sqscopy"
+    binary: sqscopy
+    dir: ./cmd/sqscopy
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    goarm:
+      - 7
+  
+  - main: .
+    id: "sqspaste"
+    binary: sqspaste
+    dir: ./cmd/sqspaste
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    goarm:
+      - 7
+
+  - main: .
+    id: "sqscopsmallfile"
+    binary: sqscopysmallfile
+    dir: ./cmd/sqscopysmallfile
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    goarm:
+      - 7
+
+  - main: .
+    id: "sqspastesmallfile"
+    binary: sqspastesmallfile
+    dir: ./cmd/sqspastesmallfile
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    goarm:
+      - 7
+
+  - main: .
+    id: "sqspurge"
+    binary: sqspurge
+    dir: ./cmd/sqspurge
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm
+    goarm:
+      - 7

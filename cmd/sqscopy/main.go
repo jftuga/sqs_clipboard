@@ -1,3 +1,5 @@
+//go:generate goversioninfo -icon=sqscopy.ico -platform-specific=true
+
 package main
 
 import (
@@ -18,6 +20,7 @@ func main() {
 		fmt.Println(copypaste.Version())
 		return
 	}
+
 	queueURL := queue.GetQueueURL()
 	cp := copypaste.New(queueURL)
 	data, err := clipboard.ReadAll()
