@@ -52,8 +52,9 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 
 **AWS Queue Creation - Automation**
 
-* [Windows](create_stack.ps1)
-* [Linux, MacOS](create_stack.sh)
+* Please review these scripts before running them and make any adjustments as needed:
+* * [Windows](create_stack.ps1)
+* * [Linux, MacOS](create_stack.sh)
 * Both of these scripts use [cloud_formation_template.json](cloud_formation_template.json)
 
 **AWS IAM Permissions**
