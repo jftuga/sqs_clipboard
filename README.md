@@ -30,11 +30,9 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 
 **Compilation**
 
-* Run: `go get github.com/akavel/rsrc`
-* Make sure the `rsrc` program can be located within your `PATH`
-* Run: `make`
-* * *make.exe* for Windows can be downloaded as a part of the [UnxUtils](https://sourceforge.net/projects/unxutils/) package.
-* There should now be 5 resulting binaries found in these subdirectories:
+* Install [GoReleaser](https://goreleaser.com/)
+* Run: `goreleaser build --rm-dist --snapshot`
+* There should now be 5 resulting binaries found in the `dist` directory:
 * * sqscopy
 * * sqspaste
 * * sqspurge
