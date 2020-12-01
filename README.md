@@ -51,6 +51,12 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * * Data key reuse period: `1 hour`
 * * A shorter time period provides better security, but results in more calls to AWS KMS, which might incur charges after Free Tier.
 
+**AWS Queue Creation - Automation**
+
+* [Windows](create_stack.ps1)
+* [Linux, MacOS](create_stack.sh)
+* Both of these scripts use [cloud_formation_template.json](cloud_formation_template.json)
+
 **AWS IAM Permissions**
 
 * Make sure to change the `Resource` value listed below.
