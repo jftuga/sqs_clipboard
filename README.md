@@ -1,6 +1,7 @@
 # sqs_clipboard
 Use AWS SQS as a clipboard to copy and paste across different systems and platforms. Clipboard contents are encrypted in transit and at rest.
 
+Binaries for Windows, MacOS, and Linux can be found on the [Releases Page](https://github.com/jftuga/sqs_clipboard/releases).
 ___
 
 **Description**
