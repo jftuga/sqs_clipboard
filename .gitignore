@@ -15,3 +15,8 @@
 # vendor/
 dist.bat
 *.syso
+assets/
+*DS_Store*
+.??*~
+*.swp
+
