@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -28,7 +29,7 @@ import (
 	"github.com/ulikunitz/xz"
 )
 
-const pgmVersion = "1.0.5"
+const pgmVersion = "1.1.0"
 const pgmName = "sqs_clipboard"
 const pgmUrl = "https://github.com/jftuga/sqs_clipboard"
 
@@ -231,7 +232,7 @@ func (cp CopyPaste) CopySmallFile(fileName string, data []byte) {
 }
 
 // PasteSmallFile retrieves a file from SQS and saves it to the file system
-func (cp CopyPaste) PasteSmallFile() string {
+func (cp CopyPaste) PasteSmallFile(destPath string) string {
 	var timeout int64
 	timeout = 5
 
@@ -263,6 +264,10 @@ func (cp CopyPaste) PasteSmallFile() string {
 	cp.Delete(*msgResult.Messages[0].ReceiptHandle)
 
 	fileName := (*msgResult.Messages[0]).MessageAttributes["Filename"].StringValue
+	if len(destPath) > 0 {
+		joined := filepath.Join(destPath, *fileName)
+		fileName = &joined
+	}
 	encoding := (*msgResult.Messages[0]).MessageAttributes["Encoding"].StringValue
 	if "xzb91" == *encoding {
 		body := *msgResult.Messages[0].Body

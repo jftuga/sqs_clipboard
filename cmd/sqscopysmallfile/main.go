@@ -6,7 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"runtime"
 
+	"github.com/gen2brain/dlgs"
 	"github.com/jftuga/copypaste"
 	"github.com/jftuga/copypaste/customlog"
 	"github.com/jftuga/copypaste/queue"
@@ -29,15 +31,28 @@ func main() {
 		return
 	}
 
-	if len(flag.Args()) != 1 {
-		customlog.Log("Give file name on command line.")
-	}
-	fileName := flag.Arg(0)
-	if !fileExists(fileName) {
-		customlog.Fatalf("File not found: %s", fileName)
+	fileName := ""
+	if len(flag.Args()) == 1 {
+		fileName = flag.Arg(0)
+		if !fileExists(fileName) {
+			customlog.Fatalf("File not found: %s", fileName)
+		}
+	} else {
+		if runtime.GOOS == "windows" || runtime.GOOS == "darwin" {
+			var success bool
+			var err error
+			fileName, success, err = dlgs.File("SQS Copy Small File", "", false)
+			if !success {
+				//customlog.Fatalf("Unable to open file dialog")
+				os.Exit(0)
+			}
+			if err != nil {
+				customlog.Log(err.Error())
+			}
+		}
 	}
 
-	data, err := ioutil.ReadFile(os.Args[1])
+	data, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		customlog.Log(err.Error())
 	}
