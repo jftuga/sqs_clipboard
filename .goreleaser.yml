@@ -1,8 +1,10 @@
 project_name: sqs_clipboard
+
 before:
   hooks:
     - go generate ./...
     - go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+
 builds:
   - main: .
     id: "sqscopy"
@@ -11,7 +13,6 @@ builds:
     goos:
       - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm
@@ -19,18 +20,39 @@ builds:
       - 7
   
   - main: .
+    id: "sqscopygui"
+    binary: sqscopy
+    dir: ./cmd/sqscopy
+    ldflags:
+      - -s -w -H windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
+
+  - main: .
     id: "sqspaste"
     binary: sqspaste
     dir: ./cmd/sqspaste
     goos:
       - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm
     goarm:
       - 7
+
+  - main: .
+    id: "sqspastegui"
+    binary: sqspaste
+    dir: ./cmd/sqspaste
+    ldflags:
+      - -s -w -H windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
 
   - main: .
     id: "sqscopsmallfile"
@@ -39,12 +61,22 @@ builds:
     goos:
       - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm
     goarm:
       - 7
+
+  - main: .
+    id: "sqscopysmallfilegui"
+    binary: sqscopysmallfile
+    dir: ./cmd/sqscopysmallfile
+    ldflags:
+      - -s -w -H windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
 
   - main: .
     id: "sqspastesmallfile"
@@ -53,12 +85,22 @@ builds:
     goos:
       - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm
     goarm:
       - 7
+
+  - main: .
+    id: "sqspastesmallfilegui"
+    binary: sqspastesmallfile
+    dir: ./cmd/sqspastesmallfile
+    ldflags:
+      - -s -w -H windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
 
   - main: .
     id: "sqspurge"
@@ -67,12 +109,22 @@ builds:
     goos:
       - linux
       - darwin
-      - windows
     goarch:
       - amd64
       - arm
     goarm:
       - 7
+
+  - main: .
+    id: "sqspurgegui"
+    binary: sqspurge
+    dir: ./cmd/sqspurge
+    ldflags:
+      - -s -w -H windowsgui
+    goos:
+      - windows
+    goarch:
+      - amd64
 
 archives:
    - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ .Arm }}"
