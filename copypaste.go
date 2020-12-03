@@ -256,6 +256,10 @@ func (cp CopyPaste) PasteSmallFile() string {
 		return ""
 	}
 
+	if _, ok := (*msgResult.Messages[0]).MessageAttributes["Filename"]; !ok {
+		customlog.Fatalf("You are trying to paste a file. Use 'sqspaste' instead.")
+	}
+
 	cp.Delete(*msgResult.Messages[0].ReceiptHandle)
 
 	fileName := (*msgResult.Messages[0]).MessageAttributes["Filename"].StringValue
