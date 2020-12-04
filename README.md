@@ -41,6 +41,7 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 
 **AWS Queue Creation**
 
+* Open the [Amazon SQS Console](https://console.aws.amazon.com/sqs/v2/home)
 * Make sure to create a `fifo` queue instead of a `standard` queue
 * * The name of your queue should end in `.fifo`
 * Set the `Receive message wait time` aka *long polling* to at least `12` seconds
