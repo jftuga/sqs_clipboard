@@ -22,38 +22,6 @@ This set of programs can be used to *copy* and *paste* clipboard text by using a
 * * file name is stored in the queue along with the file
 * * no command line arguments needed
 
-**Setting Environment Variables**
-
-* The `SQS_CLIPBOARD_URL` environment variable should be set to URL of your SQS `FIFO` Queue
-* * This URL can be found on the AWS SQS Dashboard for the queue that you have created
-* [How to set environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set)
-
-**Setting Configuration File**
-* For Windows and MacOS, you might want to set the `SQS_CLIPBOARD_URL` value in a configuration file instead of using environment variable.
-* This will allow you to launch the programs from the *Windows Taskbar* or *MacOS Dock*.
-* To do this you will need to create this file:
-* * Windows: `%HOMEPATH%\.aws\sqs_clipboard`
-* * MacOS: `${HOME}/.aws/sqs_clipboard`
-
-File format:
-
-```ini
-[default]
-SQS_CLIPBOARD_URL=https://sqs.region.amazonaws.com/idnumber/queuename.fifo
-```
-
-
-**Compilation**
-
-* Install [GoReleaser](https://goreleaser.com/)
-* Run: `goreleaser build --rm-dist --snapshot`
-* There should now be 5 resulting binaries found in the `dist` directory:
-* * sqscopy
-* * sqspaste
-* * sqspurge
-* * sqscopysmallfile
-* * sqspastesmallfile
-
 **AWS Queue Creation**
 
 * Open the [Amazon SQS Console](https://console.aws.amazon.com/sqs/v2/home)
@@ -101,6 +69,39 @@ SQS_CLIPBOARD_URL=https://sqs.region.amazonaws.com/idnumber/queuename.fifo
     ]
 }
 ```
+
+**Setting Environment Variables**
+
+* The `SQS_CLIPBOARD_URL` environment variable should be set to URL of your SQS `FIFO` Queue
+* * This URL can be found on the AWS SQS Dashboard for the queue that you have created
+* [How to set environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#envvars-set)
+
+**Setting Configuration File**
+* For Windows and MacOS, you might want to set the `SQS_CLIPBOARD_URL` value in a configuration file instead of using environment variable.
+* This will allow you to launch the programs from the *Windows Taskbar* or *MacOS Dock*.
+* To do this you will need to create this file:
+* * Windows: `%HOMEPATH%\.aws\sqs_clipboard`
+* * MacOS: `${HOME}/.aws/sqs_clipboard`
+
+File format:
+
+```ini
+[default]
+SQS_CLIPBOARD_URL=https://sqs.region.amazonaws.com/account-id/queuename.fifo
+```
+
+___
+
+**Compilation**
+
+* Install [GoReleaser](https://goreleaser.com/)
+* Run: `goreleaser build --rm-dist --snapshot`
+* There should now be 5 resulting binaries found in the `dist` directory:
+* * sqscopy
+* * sqspaste
+* * sqspurge
+* * sqscopysmallfile
+* * sqspastesmallfile
 
 ___
 
