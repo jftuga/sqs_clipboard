@@ -55,7 +55,7 @@ builds:
       - amd64
 
   - main: .
-    id: "sqscopsmallfile"
+    id: "sqscopysmallfile"
     binary: sqscopysmallfile
     dir: ./cmd/sqscopysmallfile
     goos:
