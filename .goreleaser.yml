@@ -2,8 +2,8 @@ project_name: sqs_clipboard
 
 before:
   hooks:
-    - go generate ./...
     - go get github.com/josephspurrier/goversioninfo/cmd/goversioninfo
+    - go generate ./...
 
 builds:
   - main: .
