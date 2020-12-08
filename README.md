@@ -103,6 +103,8 @@ ___
 * * sqscopysmallfile
 * * sqspastesmallfile
 
+You can also create a *Mac App* by running [mac_app_builder.sh](cmd/mac_app_builder.sh)
+
 ___
 
 **Windows Icons Used**
@@ -127,8 +129,4 @@ ___
 * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-sqs-queues.html
 * https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-cli-creating-stack.html
 * https://docs.aws.amazon.com/cli/latest/reference/cloudformation/describe-stacks.html
-
-**TODO**
-
-* Create a MacOS *app* to include icon
 
